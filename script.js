@@ -7,7 +7,8 @@ function redir() {
 // cuts old items
 var d2 = new Date();
 for (i=0; i<document.getElementsByTagName("p").length; i++) {
-  if (document.getElementsByTagName("p")[i].innerHTML.match(/[0-9]{1,2}\.[0-9]{1,2}\./g)[0].match(/[0-9]{1,2}/g)[0] < d2.getDate() || document.getElementsByTagName("p")[i].innerHTML.match(/[0-9]{1,2}\.[0-9]{1,2}\./g)[0].match(/[0-9]{1,2}/g)[1] < (d2.getMonth()+1)) {
+  var daymonth = document.getElementsByTagName("p")[i].innerHTML.match(/[0-9]{1,2}\.[0-9]{1,2}\./g)[0].match(/[0-9]{1,2}/g);
+  if (daymonth[0] < d2.getDate() || daymonth[1] < (d2.getMonth()+1) || (daymonth[0] == d2.getDate() && d2.getHours() > 16) ) {
     document.getElementsByTagName("p")[i].style.display = "none";
   }
 }
