@@ -40,7 +40,7 @@ rssupd() {
 htmlgen() {
   file="$1"
   mapfile -t items < "$file"
-  sed 8q "$htmlfile" > ./htmlcut
+  sed 9q "$htmlfile" > ./htmlcut
   mv ./htmlcut "$htmlfile"
   for item in "${items[@]}"; do
     echo "<p>""$item""</p>" >> "$htmlfile"

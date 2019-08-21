@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <title>vplan</title>
 </head><body>
-<a onclick="redir()" href="#">vertretungsplan</a> <a href="./vp.rss">rss feed</a> <button onclick="showall()">alles</button>
+<a onclick="redir()" href="#">vertretungsplan</a> <a href="./vp.rss">rss feed</a> <button onclick="showall()">all</button> <button onclick="openfm()">filter</button>
+<div id="filtermenu" style="display: none;"><input id="tb" placeholder="comma separated list of filters" autofocus></input> <button onclick="setfilters()">done</button></div>
 <div id="c">
 </div><script src="./script.js"></script></body></html>
