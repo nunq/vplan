@@ -5,6 +5,9 @@ Date.prototype.getWeekNumber=function(){var d=new Date(Date.UTC(this.getFullYear
 function redir() {
   window.location.href = fullurl+new Date().getWeekNumber()+classfile;
 }
+function f5() {
+  location.reload(true);
+}
 // item hiding funcs
 function hideold() {
   const d2 = new Date();
