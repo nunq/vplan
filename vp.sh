@@ -47,7 +47,7 @@ htmlgen() {
   for item in "${items[@]}"; do
     echo "<p>""$item""</p>" >> "$htmlfile"
   done
-  echo "</div><script src=\"./script.js\"></script></body></html>" >> "$htmlfile"
+  echo "</div><span id=\"ft\"> powered by sed and js <a id=\"code\" href=\"https://github.com/hyphenc/vplan\">code</a></span><script src=\"./script.js\"></script></body></html>" >> "$htmlfile"
 }
 # main
 # 'magic' oneliner that does all the formatting, you can add your own sed 'substitute' commands in the first sed command
