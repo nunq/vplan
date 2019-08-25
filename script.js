@@ -68,3 +68,4 @@ function setfilters() {
 window.addEventListener('DOMContentLoaded', (event) => {
     filter();
 });
+setInterval(f5(), 90000);
