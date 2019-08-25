@@ -8,13 +8,24 @@ function redir() {
 function f5() {
   location.reload(true);
 }
-// item hiding funcs
 function hideold() {
   const d2 = new Date();
+  var dateofprevitem = document.getElementsByTagName("p")[0].innerHTML.match(/[0-9]{1,2}\.[0-9]{1,2}\./g)[0].match(/[0-9]{1,2}/g);
   for (i=0; i<document.getElementsByTagName("p").length; i++) {
     var daymonth = document.getElementsByTagName("p")[i].innerHTML.match(/[0-9]{1,2}\.[0-9]{1,2}\./g)[0].match(/[0-9]{1,2}/g);
     if (daymonth[0] < d2.getDate() || daymonth[1] < (d2.getMonth()+1) || (daymonth[0] == d2.getDate() && d2.getHours() > 16) ) {
       document.getElementsByTagName("p")[i].style.display = "none";
+    }
+    if (daymonth[0] > dateofprevitem[0] || daymonth[1] > dateofprevitem[1]) {
+      document.getElementsByTagName("p")[i].style.marginTop = "40px";
+      dateofprevitem[0] = daymonth[0];
+      dateofprevitem[1] = daymonth[1];
+    }
+  }
+  for (i=0; i<document.getElementsByTagName("p").length; i++) {
+    if (document.getElementsByTagName("p")[i].style.display != "none") {
+      document.getElementsByTagName("p")[i].style.marginTop = "1em";
+      break;
     }
   }
 }
