@@ -29,9 +29,14 @@ function hideold() {
     }
   }
 }
-function showall() {
-  for (i=0; i<document.getElementsByTagName("p").length; i++) {
-    document.getElementsByTagName("p")[i].style.display = "block";
+function selectview() {
+  if (document.getElementById("cb").checked) {
+    for (i=0; i<document.getElementsByTagName("p").length; i++) {
+      document.getElementsByTagName("p")[i].style.display = "block";
+    }
+    document.getElementsByTagName("p")[document.getElementsByTagName("p").length-1].style.marginTop = "40px";
+  } else {
+    filter();
   }
 }
 function openfm() {
