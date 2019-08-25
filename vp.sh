@@ -14,7 +14,6 @@ rssfile="" # path
 htmlfile="" # path
 rsslinkto=""
 rssdate=$(date +%a,-%d-%b-%Y-%T-%z | sed -e 's/-/ /g') # rss lastbuild date
-sec=$(date +%s) # guid/unique id (epoch secs)
 date=$(date +%d.%m)
 
 [[ -f ./lock ]] && echo "lock present" && exit
@@ -25,7 +24,7 @@ rssupd() {
   title="${1:2}"
   content="$1"
   sleep 1
-  sed -i '/<\/lastBuildDate>/a\\t\t<item>\n\t\t\t<title>'"$date"': '"$title"'<\/title>\n\t\t\t<guid isPermaLink=\"false\">'"$sec"'<\/guid>\n\t\t\t<link>'"$rsslinkto"'<\/link>\n\t\t\t<description><![CDATA[<p>'"$content"'<\/p>]]><\/description>\n\t\t\t<pubDate>'"$rssdate"'</pubDate>\n\t\t<\/item>' "$rssfile"
+  sed -i '/<\/lastBuildDate>/a\\t\t<item>\n\t\t\t<title>'"$date"': '"$title"'<\/title>\n\t\t\t<guid isPermaLink=\"false\">'"$(date +%s)"'<\/guid>\n\t\t\t<link>'"$rsslinkto"'<\/link>\n\t\t\t<description><![CDATA[<p>'"$content"'<\/p>]]><\/description>\n\t\t\t<pubDate>'"$rssdate"'</pubDate>\n\t\t<\/item>' "$rssfile"
   sed -i "s/<lastBuildDate>.*<\/lastBuildDate>/<lastBuildDate>$rssdate<\/lastBuildDate>/gi" "$rssfile"
   # VERY hacky way to cleanup up rss items older than 3 days
   mapfile -t guids <<< "$(grep -oP '(?<=guid isPermaLink="false">).*(?=</guid>)' "$rssfile")"
