@@ -6,7 +6,7 @@ function redir() {
   window.location.href = fullurl+new Date().getWeekNumber()+classfile;
 }
 function f5() {
-  location.reload(true);
+  if (window.navigator.onLine) {location.reload(true);}
 }
 function hideold() {
   const d2 = new Date();
@@ -68,4 +68,4 @@ function setfilters() {
 window.addEventListener('DOMContentLoaded', (event) => {
     filter();
 });
-setInterval(f5(), 90000);
+setInterval(f5, 90000);
