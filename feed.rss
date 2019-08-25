@@ -1,21 +1,21 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
 <channel>
     <title>vplan rss</title>
-    <link>link to?</link>
+    <link>LINK TO INDEX.HTML</link>
     <description>vplan</description>
     <language>de</language>
     <image>
-        <url>image url</url>
-        <link>link to?</link>
+        <url>PATH TO IMAGE FILE</url>
+        <link>LINK TO INDEX.HTML</link>
         <title>vplan rss</title>
     </image>
     <ttl>5</ttl>
-    <atom:link href="link to?" rel="self"/>
+    <atom:link href="PATH TO FEED.RSS" rel="self"/>
     <lastBuildDate>Tue, 20 Aug 2019 08:50:04 +0200</lastBuildDate>
 		<item>
 			<title>example</title>
 			<guid isPermaLink="false">1566283804</guid>
-			<link>link to?</link>
+			<link>https://example.org</link>
 			<description><![CDATA[<p>example content</p>]]></description>
 			<pubDate>Tue, 20 Aug 2019 08:50:04 +0200</pubDate>
 		</item>
