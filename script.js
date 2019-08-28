@@ -17,15 +17,9 @@ function hideold() {
       document.getElementsByTagName("p")[i].style.display = "none";
     }
     if (daymonth[0] > dateofprevitem[0] || daymonth[1] > dateofprevitem[1]) {
-      document.getElementsByTagName("p")[i].style.marginTop = "40px";
+      document.getElementsByTagName("p")[i-1].style.marginBottom = "40px";
       dateofprevitem[0] = daymonth[0];
       dateofprevitem[1] = daymonth[1];
-    }
-  }
-  for (i=0; i<document.getElementsByTagName("p").length; i++) {
-    if (document.getElementsByTagName("p")[i].style.display != "none") {
-      document.getElementsByTagName("p")[i].style.marginTop = "1em";
-      break;
     }
   }
 }
@@ -34,7 +28,6 @@ function selectview() {
     for (i=0; i<document.getElementsByTagName("p").length; i++) {
       document.getElementsByTagName("p")[i].style.display = "block";
     }
-    document.getElementsByTagName("p")[document.getElementsByTagName("p").length-1].style.marginTop = "40px";
   } else {
     filter();
   }
