@@ -16,7 +16,8 @@ verschiedene variablen müssen in vp.sh, script.js und feed.rss angegeben werden
 um den rss feed zu aktualisieren und die html seite zu generieren, geht vp.sh von bestimmten vorraussetzungen für `$rssfile` und `$htmlfile` aus.
 
 für `$htmlfile`: `<div id="c">` muss auf linie 9 sein, wenn "`sed 9q`" in vp.sh nicht angepasst wurde.
-für `$rssfile`: 2 Linien über `<guid>` muss der `<item>` tag sein, 4 Linien unter `<guid>` muss der `</item>` tag sein, sofern nicht in vp.sh angepasst.
+
+für `$rssfile`: 2 linien über `<guid>` muss der `<item>` tag sein, 4 linien unter `<guid>` muss der `</item>` tag sein, sofern nicht in vp.sh angepasst.
 
 ### dependencies
 
