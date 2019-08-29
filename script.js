@@ -13,7 +13,7 @@ function hideold() {
   var dateofprevitem = document.getElementsByTagName("p")[0].innerHTML.match(/[0-9]{1,2}\.[0-9]{1,2}\./g)[0].match(/[0-9]{1,2}/g);
   for (i=0; i<document.getElementsByTagName("p").length; i++) {
     var daymonth = document.getElementsByTagName("p")[i].innerHTML.match(/[0-9]{1,2}\.[0-9]{1,2}\./g)[0].match(/[0-9]{1,2}/g);
-    if (daymonth[0] < d2.getDate() || daymonth[1] < (d2.getMonth()+1) || (daymonth[0] == d2.getDate() && d2.getHours() > 16) ) {
+    if ( (daymonth[0] < d2.getDate() && daymonth[1] <= (d2.getMonth()+1)) || daymonth[1] < (d2.getMonth()+1) || (daymonth[0] == d2.getDate() && d2.getHours() > 16) ) {
       document.getElementsByTagName("p")[i].style.display = "none";
     }
     if (daymonth[0] > dateofprevitem[0] || daymonth[1] > dateofprevitem[1]) {
