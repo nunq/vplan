@@ -25,8 +25,18 @@ iconv, diff, curl und jq
 
 der `sed -r` command (im oneliner) braucht `sed 4.7` damit er funktioniert, sonst wird spezieller (aber nicht seltener!) input nicht richtig formatiert.
 
+wenn's diese version nicht in den repos gibt, compilen [how-to](https://askubuntu.com/questions/1107139/how-to-upgrade-sed-to-4-5-on-ubuntu-server-18-04).
+
+dann folgendes oben in vp.sh einfügen:
+```
+shopt -s expand_aliases
+alias sed=sed47
+```
+
 ## sonstiges
 
 fyi, das ist alles etwas fragil, da schon *ein* verändertes merkmal im input das regex matching kaputt machen kann, deswegen bleibt es in der dauerbeta™.
+
+seit commit 1b06bdd sind die chars `( ) :` "illegal" und werden rausgefiltert, da die das regex matching kaputt machen.
 
 die in-code documentation ist auf englisch, warum auch immer.
