@@ -1,0 +1,126 @@
+body {
+  background: #444;
+  font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+  color: #eee;
+  margin: 0;
+}
+
+button {
+  font-size: 12pt;
+}
+
+.item {
+  background: #2d2d2d;
+  display: flex;
+  flex-flow: row nowrap;
+  margin-top: 1.3em;
+  border-radius: 22px;
+  height: 64px;
+  padding: 20px;
+  align-items: center;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.when {
+  font-size: 2.1em;
+  font-weight: 900;
+  min-width: 100px;
+  text-align: center;
+}
+
+.info {
+  margin-left: 10px;
+  font-size: 1.2em;
+  overflow-y: scroll;
+}
+
+#ft {
+  font-family: monospace;
+  margin-top: 2em;
+  margin-bottom: 1.5em;
+  text-align: center;
+}
+
+#ft, a, #code {
+  font-size: 14pt;
+}
+
+a {
+  color: #0099ff;
+}
+
+h1 {
+  letter-spacing: 2px;
+  float: left;
+}
+
+.header {
+  background: #202020;
+  padding: 1px 20px;
+  overflow: hidden;
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  justify-content: space-between;
+}
+
+#c {
+  margin: auto;
+  padding: 0 5px;
+}
+
+.sticky {
+  position: fixed;
+  top: 0;
+  width: calc(100% - (100vw - 100%) - 2.5em);
+}
+
+.sticky + #c {
+  padding-top: 89px;
+}
+
+.info>p {
+  margin: 5px;
+}
+
+span.fas, span.far {
+  font-size: 2rem;
+  padding: 0 6px;
+}
+
+#actions>a {
+  text-decoration: none;
+  color: #eee;
+}
+
+#actions>span:hover {
+  cursor: pointer;
+}
+
+@media only screen and (min-width: 800px) {
+  #c { width: 600px; }
+}
+
+@media only screen and (max-width: 900px) {
+  h2 {
+    margin-left: 5px;
+  }
+  span.fas, span.far {
+    font-size: 1.7rem;
+    padding: 0 4px;
+  }
+}
+
+.misc {
+  font-size: 0.8em;
+  max-height: 1.2em;
+}
+
+.what {
+  font-weight: bold;
+}
+
+h2 {
+  margin-top: 1.8em;
+  color: rgba(238, 238, 238, 0.95);
+}

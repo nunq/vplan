@@ -41,16 +41,21 @@ rssupd() {
 htmlgen() {
   file="$1"
   mapfile -t items < "$file"
-  sed 9q "$htmlfile" > ./htmlcut
+  sed 18q "$htmlfile" > ./htmlcut
   mv ./htmlcut "$htmlfile"
   for item in "${items[@]}"; do
-    echo "<p>""$item""</p>" >> "$htmlfile"
+    date="$(grep -Po '([0-9]{1,2}\.){2}' <<< "$item")"
+    when="$(grep -Po '^[\d - \d\0-9]*' <<< "$item" | sed 's/ $//gi')"
+    what="$(grep -Po '(?<='"$when"').*?(?= '"$date"')' <<< "$item" | sed 's/^ //gi')"
+    misc="$(grep -Po '(?<='"$date"' ).*?(?=$)' <<< "$item" | sed 's/^...//gi')"
+    echo "<div class='"$date" item'><div><p class='when'>"$when"</p></div><div class='info'><p class='what'>"$what"</p><p class='misc'>"$misc"</p></div></div>" >> "$htmlfile"
   done
-  echo "</div><span id=\"ft\"> powered by sed and js <a id=\"code\" href=\"https://github.com/hyphenc/vplan\">code</a></span><script src=\"./script.js\"></script></body></html>" >> "$htmlfile"
+  echo "</div><div id='ft'> powered by sed and js <a id='code' href='https://github.com/hyphenc/vplan'>code</a></div><script src='./script.js'></script></body></html>
+" >> "$htmlfile"
 }
 # main
 # 'magic' oneliner that does all the formatting, you can add your own sed 'substitute' commands in the first sed command
-curl -s "$fullurl""$(date +%V)""$classfile" | iconv -f iso-8859-1 -t utf-8 | sed 's/<TR>//gi;/<\/font>.*<\/TD>/d;/<TD.*[<font\align.*].*/d;1,24d;$d;s/Vtr\. ohne Lehrer/EVA/;s/Raum-Vtr\./RVTR/;s/Statt-Vertretung/SVTR/' | head -n -4 | tr '\r\n' '#' | sed 's/<\/TR>/\n/gi;s/##/ /gi' | sed '1d;s/^ //;s/ ---//gi;s/[)\(\:]//gi;s/ \+/ /gi;s/ $//;s/ \+x *$//;s/).*?$//;s/^.*?(//' | sed -r 's/ \+//gi;s/8-10/8 - 10/;s/([0-9\0-9 - 0-9{1,2}] [A-Z\a-z\ä\ö\ü]* )(([0-9]{1,2}\.){2} [A-Z]{1}[a-z]{1} )/\2 \1/;s/([0-9]{1,2}[a-z]([, ]{1,6})){1,6}//' > "$compfile"
+curl -s "$fullurl""$(date +%V)""$classfile" | iconv -f iso-8859-1 -t utf-8 | sed 's/<TR>//gi;/<\/font>.*<\/TD>/d;/<TD.*[<font\align.*].*/d;1,24d;$d;s/Vtr\. ohne Lehrer/EVA/' | head -n -4 | tr '\r\n' '#' | sed 's/<\/TR>/\n/gi;s/##/ /gi' | sed '1d;s/^ //;s/ ---//gi;s/[)\(\:]//gi;s/ \+/ /gi;s/ $//;s/ \+x *$//;s/).*?$//;s/^.*?(//' | sed -r 's/ \+//gi;s/([0-9]{1,2})-([0-9]{1,2})/\1 - \2/gi;s/([0-9]{1,2}[a-z]([, ]{1,6})){1,6}//' > "$compfile"
 if ! [ $(diff -w "$cachefile" "$compfile" > /dev/null 2>&1 ) ]; then
   mapfile -t newitems <<< $(diff -w "$cachefile" "$compfile" | grep -P "[<\>] *")
   for newitem in "${newitems[@]}"; do

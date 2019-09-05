@@ -3,8 +3,17 @@
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <meta charset="utf-8">
 <title>vplan</title>
-<style>* {font-size: 13pt;} p, #code, span {font-size: 16px;} #tb {width: 16em} #ft {font-family: monospace; margin-top: 1.7em; bottom: 0; margin-left: 10px;} #filtermenu {display: none; margin-top: 5px;} button {font-size: 12pt;}</style></head><body>
-<a onclick="redir()" href="#">vertretungsplan</a> <a href="./feed.rss">feed</a> <label><input type="checkbox" id="cb" onclick="selectview()">show all</label> <button onclick="openfm()">filter</button> <button onclick="f5()">refresh</button>
-<div id="filtermenu" style="display: none;"><input id="tb" placeholder="comma separated list of filters" autofocus></input> <button onclick="setfilters()">done</button></div>
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.2/css/all.min.css">
+<div class="header">
+  <div><h1>vplan</h1></div>
+  <div id="actions">
+  <a onclick="redir()" href="#"><span class="far fa-share-square fa-fw"></span></a>
+  <a href="./feed.rss"><span class="fas fa-rss fa-fw"></span></a>
+  <span onclick="selectview()" id="viewsel" class="far fa-eye fa-fw"></span>
+  <span onclick="openfm()" class="fas fa-filter fa-fw"></span>
+  <span onclick="f5()" class="fas fa-sync-alt fa-fw"></span>
+  </div>
+</div>
 <div id="c">
-</div><span id="ft"> powered by sed and js <a id="code" href="https://github.com/hyphenc/vplan">code</a></span><script src="./script.js"></script></body></html>
+</div><div id='ft'> powered by sed and js <a id='code' href='https://github.com/hyphenc/vplan'>code</a></div><script src='./script.js'></script></body></html>
