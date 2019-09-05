@@ -15,7 +15,7 @@ auf der generierten html seite werden vergangene meldungen sowie heutige meldung
 verschiedene variablen müssen in vp.sh, script.js und feed.rss angegeben werden. index.html, script.js und feed.rss dann am besten mit `$webserver` hosten, **aber nicht** im gleichen verzeichnis.
 um den rss feed zu aktualisieren und die html seite zu generieren, geht vp.sh von bestimmten vorraussetzungen für `$rssfile` und `$htmlfile` aus.
 
-für `$htmlfile`: `<div id="c">` muss auf linie 9 sein, wenn "`sed 9q`" in vp.sh nicht angepasst wurde.
+für `$htmlfile`: `<div id="c">` muss auf linie 18 sein, wenn "`sed 18q`" in vp.sh nicht angepasst wurde.
 
 für `$rssfile`: 2 linien über `<guid>` muss der `<item>` tag sein, 4 linien unter `<guid>` muss der `</item>` tag sein, sofern nicht in vp.sh angepasst.
 
@@ -30,7 +30,7 @@ wenn's diese version nicht in den repos gibt, compilen [how-to](https://askubunt
 dann folgendes oben in vp.sh einfügen:
 ```
 shopt -s expand_aliases
-alias sed=sed47
+alias sed=$pfad_zu_sed47_binary
 ```
 
 ## sonstiges
