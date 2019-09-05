@@ -40,3 +40,7 @@ fyi, das ist alles etwas fragil, da schon *ein* verändertes merkmal im input da
 seit commit 1b06bdd sind die chars `( ) :` "illegal" und werden rausgefiltert, da die das regex matching kaputt machen.
 
 die in-code documentation ist auf englisch, warum auch immer.
+
+bild von der generierten statischen html seite:
+
+<img src="https://i.imgur.com/5mUk4nE.png" alt="die statische html seite">
