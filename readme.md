@@ -13,6 +13,17 @@ auf der generierten html seite werden vergangene meldungen sowie heutige meldung
 > feed.rss und index.html sind beispieldateien
 
 verschiedene variablen müssen in vp.sh, script.js und feed.rss angegeben werden. index.html, script.js und feed.rss dann am besten mit `$webserver` hosten, **aber nicht** im gleichen verzeichnis.
+
+```
+vp.sh (die ersten beiden auch für script.js)
+------
+fullurl # idR die url zum vertretungsplan "hauptinterface" der schule. falls die hinter http basic auth sitzt, müssen user und pass in der url gegeben werden
+classfile # findet man idR unter $fullurl/w/w000* muss man halt gucken, welche datei zu welcher klasse gehört
+apicall # optional, curl macht eine get request an diese url, die neuen items werden direkt hinten an die url angefügt
+rssfile & htmlfile # pfad zu feed.rss und index.html
+rsslinkto # wo der rss feed hinlinkt
+```
+
 um den rss feed zu aktualisieren und die html seite zu generieren, geht vp.sh von bestimmten vorraussetzungen für `$rssfile` und `$htmlfile` aus.
 
 für `$htmlfile`: `<div id="c">` muss auf linie 18 sein, wenn "`sed 18q`" in vp.sh nicht angepasst wurde.

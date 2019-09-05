@@ -1,8 +1,5 @@
 #!/bin/bash
-# depends on: iconv, diff, curl, jq
-# $cachefile needs to exist
 # if you don't properly set up the vars below, this is not gonna work.
-# the rss update function expects that there are a certain number of lines in $rssfile, else some funtionality may not work properly
 set -eu -o pipefail
 fullurl="" # full-formed url to untis interface containing http basic auth tokens
 apicall="" # curl does a GET request to this url, the new 'data' is appended to this url
