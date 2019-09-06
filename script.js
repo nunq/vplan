@@ -11,27 +11,24 @@ function f5() { if (window.navigator.onLine) {location.reload(true);} };
 function hideold(includeall) {
   while (document.getElementsByTagName("h2")[0]) { document.getElementsByTagName("h2")[0].parentNode.removeChild(document.getElementsByTagName("h2")[0]) };
   var dateofprevitem = document.getElementsByClassName("item")[0].classList[0].match(/[0-9]{1,2}\.[0-9]{1,2}\./g)[0].match(/[0-9]{1,2}/g);
-  if (includeall) {
     document.getElementsByClassName("item")[0].insertAdjacentHTML("beforebegin", "<h2>"+getweekday(dateofprevitem[1]-1, dateofprevitem[0])+" "+((dateofprevitem[0].length<2?"0":"")+dateofprevitem[0])+"."+((dateofprevitem[1].length<2?"0":"")+dateofprevitem[1])+"</h2>");
-  }
   for (i=0; i<document.getElementsByClassName("item").length; i++) {
     var daymonth = document.getElementsByClassName("item")[i].classList[0].match(/[0-9]{1,2}\.[0-9]{1,2}\./g)[0].match(/[0-9]{1,2}/g);
     if ( ((daymonth[0] < d2.getDate() && daymonth[1] <= (d2.getMonth()+1)) || daymonth[1] < (d2.getMonth()+1) || (daymonth[0] == d2.getDate() && d2.getHours() > 16)) && !includeall ) {
       document.getElementsByClassName("item")[i].style.display = "none";
     }
     if (daymonth[0] > dateofprevitem[0] || daymonth[1] > dateofprevitem[1]) {
-      if (includeall) {
         document.getElementsByClassName("item")[i].insertAdjacentHTML("beforebegin", "<h2>"+getweekday(daymonth[1]-1, daymonth[0])+" "+((daymonth[0].length<2?"0":"")+daymonth[0])+"."+((daymonth[1].length<2?"0":"")+daymonth[1])+"</h2>");
-      }
-      else {
-        document.getElementsByClassName("item")[i].insertAdjacentHTML("beforebegin", "<h2>"+getweekday(daymonth[1]-1, daymonth[0])+" "+((daymonth[0].length<2?"0":"")+daymonth[0])+"."+((daymonth[1].length<2?"0":"")+daymonth[1])+"</h2>");
-        if (document.getElementsByClassName("item")[0].style.display !== "none") {
-          document.getElementsByClassName("item")[0].insertAdjacentHTML("beforebegin", "<h2>"+getweekday(daymonth[1]-1, daymonth[0])+" "+((daymonth[0].length<2?"0":"")+daymonth[0])+"."+((daymonth[1].length<2?"0":"")+daymonth[1])+"</h2>");
-        }
-      }
     dateofprevitem[0] = daymonth[0];
     dateofprevitem[1] = daymonth[1];
   }}
+  if (!includeall) {
+    for (i=0; i<document.getElementsByTagName("h2").length; i++) {
+      var h2dm = document.getElementsByTagName("h2")[i].innerHTML.replace(/^[a-zA-Z]*? /, "").replace(/^0/, "").replace(/\.0/, ".").match(/[0-9]{1,2}\.[0-9]{1,2}/g)[0].match(/[0-9]{1,2}/g);
+      for (j=0; j<document.getElementsByClassName(h2dm[0]+"."+h2dm[1]+".").length; j++) {
+        if (document.getElementsByClassName(h2dm[0]+"."+h2dm[1]+".")[j].style.display !== "none") { break; };
+        document.getElementsByTagName("h2")[i].style.display = "none";
+  }}}
 }
 function getweekday(day, month) {
   var weekday = new Date(d2.getFullYear(), day, month).getDay();
