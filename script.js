@@ -7,7 +7,7 @@ const d2 = new Date();
 const weekdays = ["Sonntag", "Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag"];
 Date.prototype.getWeekNumber=function(){var d=new Date(Date.UTC(this.getFullYear(),this.getMonth(),this.getDate()));var dayNum=d.getUTCDay()||7;d.setUTCDate(d.getUTCDate()+4-dayNum);var yearStart=new Date(Date.UTC(d.getUTCFullYear(),0,1));weekNum=Math.ceil((((d-yearStart)/86400000)+1)/7);return(weekNum<10?"0":"")+weekNum;}
 function redir() { window.location.href = fullurl+new Date().getWeekNumber()+classfile; };
-function f5() { if (window.navigator.onLine) {location.reload(true);} };
+function f5() { if (window.navigator.onLine) { location.reload(true);} };
 function hideold(includeall) {
   while (document.getElementsByTagName("h2")[0]) { document.getElementsByTagName("h2")[0].parentNode.removeChild(document.getElementsByTagName("h2")[0]) };
   var dateofprevitem = document.getElementsByClassName("item")[0].classList[0].match(/[0-9]{1,2}\.[0-9]{1,2}\./g)[0].match(/[0-9]{1,2}/g);

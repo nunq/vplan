@@ -6,13 +6,13 @@ shell scripts für web untis, erkennt neue items und generiert dann einen rss fe
 
 ## mehr info
 
-auf der generierten html seite werden vergangene meldungen sowie heutige meldungen, wenn es nach 17 uhr ist, versteckt/weggefiltert, zudem kann jeder besucher eigene filter festlegen, die werden dann im localstorage gespeichert. beim ersten festlegen der filter wird eine kleine hilfe in einer alert box angezeigt (auf englisch, warum auch immer).
+auf der generierten html seite werden vergangene meldungen sowie heutige meldungen, wenn es nach 17 uhr ist, versteckt/weggefiltert, zudem kann jeder besucher eigene filter festlegen, die werden dann im localstorage gespeichert.
 
 ## setup
 
 > feed.rss und index.html sind beispieldateien
 
-verschiedene variablen müssen in vp.sh, script.js und feed.rss angegeben werden. index.html, script.js und feed.rss dann am besten mit `$webserver` hosten, **aber nicht** im gleichen verzeichnis.
+verschiedene variablen müssen in vp.sh, script.js und feed.rss angegeben werden. html, css und js sowie feed.rss dann am besten mit `$webserver` hosten, **aber nicht** im gleichen verzeichnis.
 
 ```
 vp.sh (die ersten beiden auch für script.js)
