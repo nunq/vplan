@@ -61,11 +61,15 @@ function openfm() {
 function filter() {
   if (ls.getItem("filters") !== null && ls.getItem("filters") !== "null") {
     filters = ls.getItem("filters").split(",");
+    for (i=0; i<filters.length; i++) {
+      filters[i] = filters[i].toString().replace(/^ +/, "").replace(/ +$/, "");
+    }
     for (i=0; i<document.getElementsByClassName("item").length; i++) {
       document.getElementsByClassName("item")[i].style.display = "";
       var text = document.getElementsByClassName("item")[i].innerHTML;
       for (j=0; j<filters.length; j++) {
-        if (text.match(new RegExp(".*"+filters[j]+".*"))) {
+        if (filters[j] === "") { break; };
+        if (text.match(new RegExp(".*"+filters[j]+".*", "i"))) {
           document.getElementsByClassName("item")[i].style.display = "none";
 }}}} hideold(false); }
 function pinheader() {
