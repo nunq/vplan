@@ -30,6 +30,19 @@ für `$htmlfile`: `<div id="c">` muss auf linie 18 sein, wenn "`sed 18q`" in vp.
 
 für `$rssfile`: 2 linien über `<guid>` muss der `<item>` tag sein, 4 linien unter `<guid>` muss der `</item>` tag sein, sofern nicht in vp.sh angepasst.
 
+### workarounds
+weil jedes item soz. eine linie aus einem diff ist, werden montag um 0 uhr alle items einmal rausgenommen aus der cachefile, dafür werden aber auch noch die apicalls/etc. gemacht, um das zu umgehen gibt es folgenden möglichen workaround im crontab:
+```
+$ crontab -e
+
+VPLANDIR=
+58 23 * * 0 touch "$VPLANDIR"/lock; echo "" > "$VPLANDIR"/vpold.txt
+1 0 * * 1 rm "$VPLANDIR"/lock && "$VPLANDIR"/vp.sh
+```
+
+#### was macht das?
+der blockt den prozess einfach mit der lockfile und leert die cachefile, sodass wenn das script um 00:01 uhr dann wieder läuft nur die items der "neuen" woche angezeigt werden.
+
 ### dependencies
 
 iconv, diff, curl und jq
