@@ -45,10 +45,8 @@ htmlgen() {
     misc="$(grep -Po '(?<='"$date"' ).*?(?=$)' <<< "$item" | sed 's/^...//gi')"
     echo "<div class='"$date" item'><div><p class='when'>"$when"</p></div><div class='info'><p class='what'>"$what"</p><p class='misc'>"$misc"</p></div></div>" >> "$htmlfile"
   done
-  echo "</div><div id='ft'> powered by sed and js <a id='code' href='https://github.com/hyphenc/vplan'>code</a></div><script src='./script.js'></script></body></html>
-" >> "$htmlfile"
+  echo "</div><div id='ft'> powered by sed and js <a id='code' href='https://github.com/hyphenc/vplan'>code</a></div><script src='./script.js'></script></body></html>" >> "$htmlfile"
 }
-# main
 # 'magic' oneliner that does all the formatting, you can add your own sed 'substitute' commands in the first sed command
 curl -s "$fullurl""$(date +%V)""$classfile" | iconv -f iso-8859-1 -t utf-8 | sed 's/<TR>//gi;/<\/font>.*<\/TD>/d;/<TD.*[<font\align.*].*/d;1,24d;$d;s/Vtr\. ohne Lehrer/EVA/' | head -n -4 | tr '\r\n' '#' | sed 's/<\/TR>/\n/gi;s/##/ /gi' | sed '1d;s/^ //;s/ ---//gi;s/[)\(\:]//gi;s/ \+/ /gi;s/ $//;s/ \+x *$//;s/).*?$//;s/^.*?(//' | sed -r 's/ \+//gi;s/([0-9]{1,2})-([0-9]{1,2})/\1 - \2/gi;s/([0-9]{1,2}[a-z]([, ]{1,6})){1,6}//' > "$compfile"
 # add newline and do lookahead for next week, filter dups

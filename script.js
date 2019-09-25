@@ -28,8 +28,7 @@ function hideold(includeall) {
       for (k=0; k<document.getElementsByClassName(h2dm[0]+"."+h2dm[1]+".").length; k++) {
         if (document.getElementsByClassName(h2dm[0]+"."+h2dm[1]+".")[k].style.display !== "none") { break; };
         document.getElementsByTagName("h2")[j].style.display = "none";
-  }}}
-}
+  }}}}
 function getweekday(day, month) {
   var weekday = new Date(d2.getFullYear(), day, month).getDay();
   return weekdays[weekday];
@@ -43,7 +42,7 @@ function selectview() {
     }
     hideold(true);
     doshowall = true;
-    } else if (doshowall) {
+  } else if (doshowall) {
     document.getElementById("viewsel").classList.remove("fa-eye-slash");
     document.getElementById("viewsel").classList.add("fa-eye");
     filter();
@@ -71,7 +70,7 @@ function filter() {
         if (filters[j] === "") { break; };
         if (text.match(new RegExp(".*"+filters[j]+".*", "i"))) {
           document.getElementsByClassName("item")[i].style.display = "none";
-}}}} hideold(false); }
+  }}}} hideold(false); }
 function pinheader() {
   var header = document.getElementsByClassName("header")[0];
   (window.pageYOffset > header.offsetTop) ? header.classList.add("sticky") : header.classList.remove("sticky");
