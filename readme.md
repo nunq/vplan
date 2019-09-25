@@ -59,7 +59,7 @@ alias sed=$pfad_zu_sed47_binary
 
 ## sonstiges
 
-fyi, das ist alles etwas fragil, da schon *ein* verändertes merkmal im input das regex matching kaputt machen kann, deswegen bleibt es in der dauerbeta™.
+fyi, das ist alles etwas fragil, da schon *ein* verändertes merkmal im input das regex matching kaputt machen *kann*, das ist aber bei anderen scrapern nicht anders (wo es keine api gibt).
 
 seit commit 1b06bdd sind die chars `( ) :` "illegal" und werden rausgefiltert, da die das regex matching kaputt machen.
 
