@@ -36,7 +36,7 @@ weil jedes item soz. eine linie aus einem diff ist, werden montag um 0 uhr alle 
 $ crontab -e
 
 VPLANDIR=
-58 23 * * 0 touch "$VPLANDIR"/lock; echo "" > "$VPLANDIR"/vpold.txt
+58 23 * * 0 touch "$VPLANDIR"/lock > "$VPLANDIR"/vpold.txt
 1 0 * * 1 rm "$VPLANDIR"/lock && "$VPLANDIR"/vp.sh
 ```
 
