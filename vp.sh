@@ -6,7 +6,7 @@ apicall="" # curl does a GET request to this url, the new 'data' is appended to 
 classfile="/w/w000XX.htm" # each class has a file
 cachefile="./vpold.txt"
 compfile="./vpnew.txt"
-errlog="./errors"
+logfile="./logfile.log"
 rssfile="" # path
 htmlfile="" # path
 rsslinkto=""
@@ -16,6 +16,16 @@ date=$(date +%d.%m)
 [[ -f ./lock ]] && echo "lock present" && exit
 touch ./lock
 rm "$compfile" || true
+# logging functions
+intolog () {
+  echo "$(date)"" -- ""$1" >> "$logfile"
+}
+
+logerror () {
+  intolog "$1"
+  exit 1
+}
+
 # supplementary functions for rss and html page generation
 rssupd() {
   content=$(sed 's/^< /OUT: /i;s/^> /IN: /i' <<< "$1")
@@ -47,23 +57,24 @@ htmlgen() {
   done
   echo "</div><div id='ft'> powered by sed and js <a id='code' href='https://github.com/hyphenc/vplan'>code</a></div><script src='./script.js'></script></body></html>" >> "$htmlfile"
 }
-# 'magic' oneliner that does all the formatting, you can add your own sed 'substitute' commands in the first sed command
-curl -s "$fullurl""$(date +%V)""$classfile" | iconv -f iso-8859-1 -t utf-8 | sed 's/<TR>//gi;/<\/font>.*<\/TD>/d;/<TD.*[<font\align.*].*/d;1,24d;$d;s/Vtr\. ohne Lehrer/EVA/' | head -n -4 | tr '\r\n' '#' | sed 's/<\/TR>/\n/gi;s/##/ /gi' | sed '1d;s/^ //;s/ ---//gi;s/[)\(\:]//gi;s/ \+/ /gi;s/ $//;s/ \+x *$//;s/).*?$//;s/^.*?(//' | sed -r 's/ \+//gi;s/([0-9]{1,2})-([0-9]{1,2})/\1 - \2/gi;s/([0-9]{1,2}[a-z]([, ]{1,6})){1,6}//' > "$compfile"
+# 'magic' oneliner that does all the formatting
+curl -s "$fullurl""$(date +%V)""$classfile" | iconv -f iso-8859-1 -t utf-8 | sed 's/<TR>//gi;/<\/font>.*<\/TD>/d;/<TD.*[<font\align.*].*/d;1,24d;$d;s/Vtr\. ohne Lehrer/EVA/' | head -n -4 | tr '\r\n' '#' | sed 's/<\/TR>/\n/gi;s/##/ /gi' | sed '1d;s/^ //;s/ ---//gi;s/[)\(\:]//gi;s/ \+/ /gi;s/ $//;s/ \+x *$//;s/).*?$//;s/^.*?(//' | sed -r 's/ \+//gi;s/([0-9]{1,2})-([0-9]{1,2})/\1 - \2/gi;s/([0-9]{1,2}[a-z]([, ]{1,6})){1,6}//' > "$compfile" || logerror "downloading and formatting data failed"
 # add newline and do lookahead for next week, filter dups
 sed -i -e '$a\' "$compfile"
-curl -s "$fullurl""$(( $(date +%V) + 1 ))""$classfile" | iconv -f iso-8859-1 -t utf-8 | sed 's/<TR>//gi;/<\/font>.*<\/TD>/d;/<TD.*[<font\align.*].*/d;1,24d;$d;s/Vtr\. ohne Lehrer/EVA/' | head -n -4 | tr '\r\n' '#' | sed 's/<\/TR>/\n/gi;s/##/ /gi' | sed '1d;s/^ //;s/ ---//gi;s/[)\(\:]//gi;s/ \+/ /gi;s/ $//;s/ \+x *$//;s/).*?$//;s/^.*?(//' | sed -r 's/ \+//gi;s/([0-9]{1,2})-([0-9]{1,2})/\1 - \2/gi;s/([0-9]{1,2}[a-z]([, ]{1,6})){1,6}//' >> "$compfile"
-gawk -i inplace '!a[$0]++' "$compfile"
+curl -s "$fullurl""$(( $(date +%V) + 1 ))""$classfile" | iconv -f iso-8859-1 -t utf-8 | sed 's/<TR>//gi;/<\/font>.*<\/TD>/d;/<TD.*[<font\align.*].*/d;1,24d;$d;s/Vtr\. ohne Lehrer/EVA/' | head -n -4 | tr '\r\n' '#' | sed 's/<\/TR>/\n/gi;s/##/ /gi' | sed '1d;s/^ //;s/ ---//gi;s/[)\(\:]//gi;s/ \+/ /gi;s/ $//;s/ \+x *$//;s/).*?$//;s/^.*?(//' | sed -r 's/ \+//gi;s/([0-9]{1,2})-([0-9]{1,2})/\1 - \2/gi;s/([0-9]{1,2}[a-z]([, ]{1,6})){1,6}//' >> "$compfile" || logerror "downloading and formatting data failed (lookahead)"
+gawk -i inplace '!a[$0]++' "$compfile" || logerror "gawk 'remove duplicates' failed"
 if ! [ $(diff -w "$cachefile" "$compfile" > /dev/null 2>&1 ) ]; then
   mapfile -t newitems <<< $(diff -w "$cachefile" "$compfile" | grep -P "[<\>] *")
   for newitem in "${newitems[@]}"; do
     if [ "$(cat -e <<< "$newitem")" = "$" ]; then continue; fi
-    formatted=$(sed 's/%1B%5B32m//gi;s/%20%1B%5B0m%0A//gi' <<< "$newitem")
-    urlencoded=$(jq -sRr @uri <<< "$formatted")
-    rssupd "$formatted" || echo "rssupd error" > "$errlog" && true
-    curl "$apicall""$urlencoded"
+    formatted=$(sed 's/%1B%5B32m//gi;s/%20%1B%5B0m%0A//gi' <<< "$newitem") || logerror "couldn't create formatted string for ""$newitem"
+    urlencoded=$(jq -sRr @uri <<< "$formatted") || logerror "couldn't urlencode ""$formatted"
+    rssupd "$formatted" || intolog "rssupd error"
+    curl "$apicall""$urlencoded" || intolog "curl-ing API failed"
     sleep 1
   done
   mv "$compfile" "$cachefile"
 fi
-htmlgen "$cachefile" || echo "htmlgen error" > "$errlog" && true
+htmlgen "$cachefile" || intolog "htmlgen error"
 rm ./lock
+intolog "exit 0: SUCCESS"
