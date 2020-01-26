@@ -74,7 +74,7 @@ if ! [ $(diff -w "$cachefile" "$compfile" > /dev/null 2>&1 ) ]; then
     sleep 1
   done
   mv "$compfile" "$cachefile"
+  htmlgen "$cachefile" || intolog "htmlgen error"
 fi
-htmlgen "$cachefile" || intolog "htmlgen error"
 rm ./lock
 intolog "exit 0: SUCCESS"
