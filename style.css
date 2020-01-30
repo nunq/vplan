@@ -32,6 +32,8 @@ button {
   margin-left: 10px;
   font-size: 1.2em;
   overflow-y: scroll;
+  scrollbar-color: #4d4d4d transparent;
+  scrollbar-width: thin;
 }
 
 #ft {

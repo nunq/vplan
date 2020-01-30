@@ -23,6 +23,7 @@ intolog () {
 
 logerror () {
   intolog "$1"
+  rm ./lock
   exit 1
 }
 
@@ -31,6 +32,9 @@ rssupd() {
   content=$(sed 's/^< /OUT: /i;s/^> /IN: /i' <<< "$1")
   sed -i '/<\/lastBuildDate>/a\\t\t<item>\n\t\t\t<title>'"$date"': '"$content"'<\/title>\n\t\t\t<guid isPermaLink=\"false\">'"$(date +%s)"'<\/guid>\n\t\t\t<link>'"$rsslinkto"'<\/link>\n\t\t\t<description><![CDATA[<p>'"$content"'<\/p>]]><\/description>\n\t\t\t<pubDate>'"$rssdate"'</pubDate>\n\t\t<\/item>' "$rssfile"
   sed -i "s/<lastBuildDate>.*<\/lastBuildDate>/<lastBuildDate>$rssdate<\/lastBuildDate>/gi" "$rssfile"
+}
+
+rsscleanup() {
   # VERY hacky way to cleanup up rss items older than 3 days
   mapfile -t guids <<< "$(grep -oP '(?<=guid isPermaLink="false">).*(?=</guid>)' "$rssfile")"
   for guid in "${guids[@]}"; do
@@ -55,7 +59,7 @@ htmlgen() {
     misc="$(grep -Po '(?<='"$date"' ).*?(?=$)' <<< "$item" | sed 's/^...//gi')"
     echo "<div class='"$date" item'><div><p class='when'>"$when"</p></div><div class='info'><p class='what'>"$what"</p><p class='misc'>"$misc"</p></div></div>" >> "$htmlfile"
   done
-  echo "</div><div id='ft'> powered by sed and js <a id='code' href='https://github.com/hyphenc/vplan'>code</a></div><script src='./script.js'></script></body></html>" >> "$htmlfile"
+  echo "</div><div id='ft'> powered by sed and js <a id='code' href='https://github.com/hyphenc/vplan'>code</a><br><br>last build: "$(date '+%d/%m %H:%M:%S')"</div><script src='./script.js'></script></body></html>" >> "$htmlfile"
 }
 # 'magic' oneliner that does all the formatting
 curl -s "$fullurl""$(date +%V)""$classfile" | iconv -f iso-8859-1 -t utf-8 | sed 's/<TR>//gi;/<\/font>.*<\/TD>/d;/<TD.*[<font\align.*].*/d;1,24d;$d;s/Vtr\. ohne Lehrer/EVA/' | head -n -4 | tr '\r\n' '#' | sed 's/<\/TR>/\n/gi;s/##/ /gi' | sed '1d;s/^ //;s/ ---//gi;s/[)\(\:]//gi;s/ \+/ /gi;s/ $//;s/ \+x *$//;s/).*?$//;s/^.*?(//' | sed -r 's/ \+//gi;s/([0-9]{1,2})-([0-9]{1,2})/\1 - \2/gi;s/([0-9]{1,2}[a-z]([, ]{1,6})){1,6}//' > "$compfile" || logerror "downloading and formatting data failed"
@@ -75,6 +79,7 @@ if ! [ $(diff -w "$cachefile" "$compfile" > /dev/null 2>&1 ) ]; then
   done
   mv "$compfile" "$cachefile"
   htmlgen "$cachefile" || intolog "htmlgen error"
+  rsscleanup || intolog "rss feed cleanup failed"
 fi
 rm ./lock
 intolog "exit 0: SUCCESS"
