@@ -54,11 +54,12 @@ a {
 h1 {
   letter-spacing: 2px;
   float: left;
+  padding-left: 20px;
 }
 
 .header {
   background: #202020;
-  padding: 1px 20px;
+  padding: 0px;
   overflow: hidden;
   display: flex;
   flex-flow: row nowrap;
@@ -74,11 +75,11 @@ h1 {
 .sticky {
   position: fixed;
   top: 0;
-  width: calc(100% - (100vw - 100%) - 2.5em);
+  width: 100%;
 }
 
 .sticky + #c {
-  padding-top: 89px;
+  padding-top: 87px;
 }
 
 .info>p {
@@ -88,6 +89,10 @@ h1 {
 span.fas, span.far {
   font-size: 2rem;
   padding: 0 6px;
+}
+
+#actions {
+  padding-right: 20px;
 }
 
 #actions>a {
