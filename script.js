@@ -25,10 +25,13 @@ function hideold(includeall) {
   if (!includeall) {
     for (j=0; j<document.getElementsByTagName("h2").length; j++) {
       var h2dm = document.getElementsByTagName("h2")[j].innerHTML.replace(/^[a-zA-Z]*? /, "").replace(/^0/, "").replace(/\.0/, ".").match(/[0-9]{1,2}\.[0-9]{1,2}/g)[0].match(/[0-9]{1,2}/g);
+      var min_1_visible = false;
       for (k=0; k<document.getElementsByClassName(h2dm[0]+"."+h2dm[1]+".").length; k++) {
-        if (document.getElementsByClassName(h2dm[0]+"."+h2dm[1]+".")[k].style.display !== "none") { break; };
-        document.getElementsByTagName("h2")[j].style.display = "none";
-  }}}}
+        if (document.getElementsByClassName(h2dm[0]+"."+h2dm[1]+".")[k].style.display !== "none") { min_1_visible = true;};
+      }
+      if (!min_1_visible) {document.getElementsByTagName("h2")[j].style.display = "none";};
+  }}
+}
 function getweekday(day, month) {
   var weekday = new Date(d2.getFullYear(), day, month).getDay();
   return weekdays[weekday];
@@ -65,12 +68,13 @@ function filter() {
     }
     for (i=0; i<document.getElementsByClassName("item").length; i++) {
       document.getElementsByClassName("item")[i].style.display = "";
-      var text = document.getElementsByClassName("item")[i].innerHTML;
+      var text;
+      document.getElementsByClassName("item")[i].innerHTML.match(/<p class=".*">.*?<\/p>/g).forEach(function(x){text = x.replace(/<.*?class=.*?>/gi, " ").replace(/<\/p>/, "")});
       for (j=0; j<filters.length; j++) {
         if (filters[j] === "") { break; };
         if (text.match(new RegExp(".*"+filters[j]+".*", "i"))) {
           document.getElementsByClassName("item")[i].style.display = "none";
-  }}}} hideold(false); }
+}}}} hideold(false); }
 function pinheader() {
   var header = document.getElementsByClassName("header")[0];
   (window.pageYOffset > header.offsetTop) ? header.classList.add("sticky") : header.classList.remove("sticky");
