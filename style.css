@@ -125,6 +125,10 @@ span.fas, span.far {
 
 .what {
   font-weight: bold;
+  max-height: 2.75em;
+  overflow-y: scroll;
+  scrollbar-color: #4d4d4d transparent;
+  scrollbar-width: thin;
 }
 
 h2 {
