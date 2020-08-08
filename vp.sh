@@ -67,7 +67,7 @@ curl -s "$fullurl""$(date +%V)""$classfile" | iconv -f iso-8859-1 -t utf-8 | sed
 sed -i -e '$a\' "$compfile"
 curl -s "$fullurl""$(( $(date +%V) + 1 ))""$classfile" | iconv -f iso-8859-1 -t utf-8 | sed 's/<TR>//gi;/<\/font>.*<\/TD>/d;/<TD.*[<font\align.*].*/d;1,24d;$d;s/Vtr\. ohne Lehrer/EVA/' | head -n -4 | tr '\r\n' '#' | sed 's/<\/TR>/\n/gi;s/##/ /gi' | sed '1d;s/^ //;s/ ---//gi;s/[)\(\:]//gi;s/ \+/ /gi;s/ $//;s/ \+x *$//;s/).*?$//;s/^.*?(//' | sed -r 's/ \+//gi;s/([0-9]{1,2})-([0-9]{1,2})/\1 - \2/gi;s/([0-9]{1,2}[a-z]([, ]{1,6})){1,6}//' >> "$compfile" || logerror "downloading and formatting data failed (lookahead)"
 gawk -i inplace '!a[$0]++' "$compfile" || logerror "gawk 'remove duplicates' failed"
-if ! [ $(diff -w "$cachefile" "$compfile" > /dev/null 2>&1 ) ]; then
+if ! $(diff -w "$cachefile" "$compfile" > /dev/null 2>&1 ); then
   mapfile -t newitems <<< $(diff -w "$cachefile" "$compfile" | grep -P "[<\>] *")
   for newitem in "${newitems[@]}"; do
     if [ "$(cat -e <<< "$newitem")" = "$" ]; then continue; fi
