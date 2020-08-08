@@ -5,18 +5,13 @@ body {
   margin: 0;
 }
 
-button {
-  font-size: 12pt;
-}
-
 .item {
   background: #2d2d2d;
   display: flex;
   flex-flow: row nowrap;
   margin-top: 1.3em;
   border-radius: 22px;
-  height: 64px;
-  padding: 20px;
+  padding: 10px 20px;
   align-items: center;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
@@ -24,7 +19,7 @@ button {
 .when {
   font-size: 2.1em;
   font-weight: 900;
-  min-width: 100px;
+  min-width: 3em;
   text-align: center;
 }
 
@@ -119,16 +114,14 @@ span.fas, span.far {
 }
 
 .misc {
-  font-size: 0.8em;
-  max-height: 1.2em;
+  font-size: 0.85em;
+  display: inline-block;
+  padding-bottom: 5px;
 }
 
 .what {
   font-weight: bold;
-  max-height: 2.75em;
-  overflow-y: scroll;
-  scrollbar-color: #4d4d4d transparent;
-  scrollbar-width: thin;
+  display: block;
 }
 
 h2 {
