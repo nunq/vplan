@@ -49,7 +49,8 @@ rsscleanup() {
 
 htmlgen() {
   file="$1"
-  mapfile -t items < "$file"
+  sorted="$(sed -r 's/^([0-9]{,2}) - ([0-9]{,2})/\1-\2/g' "$file" | sort -hk3 | sed -r 's/^([0-9]{,2})-([0-9]{,2})/\1 - \2/g')"
+  mapfile -t items <<< "$sorted"
   sed 18q "$htmlfile" > ./htmlcut
   mv ./htmlcut "$htmlfile"
   for item in "${items[@]}"; do
