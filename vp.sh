@@ -49,12 +49,12 @@ rsscleanup() {
 
 htmlgen() {
   file="$1"
-  sorted="$(sed -r 's/^([0-9]{,2}) - ([0-9]{,2})/\1-\2/g' "$file" | sort -hk3 | sed -r 's/^([0-9]{,2})-([0-9]{,2})/\1 - \2/g')"
+  sorted="$(sed -r 's%^([0-9]{,2}) - ([0-9]{,2})%\1-\2%g' "$file" | sort -hk3 | sed -r 's%^([0-9]{,2})-([0-9]{,2})%\1 - \2%g')"
   mapfile -t items <<< "$sorted"
   sed 18q "$htmlfile" > ./htmlcut
   mv ./htmlcut "$htmlfile"
   for item in "${items[@]}"; do
-    date="$(grep -Po '([0-9]{1,2}\.){2}' <<< "$item")"
+    date="$(grep -Po '([0-9]{1,2}\.){2}' <<< "$item" | head -n 1)"
     when="$(grep -Po '^[\d - \d\0-9]*' <<< "$item" | sed 's/ $//gi')"
     what="$(grep -Po '(?<='"$when"').*?(?= '"$date"')' <<< "$item" | sed 's/^ //gi')"
     misc="$(grep -Po '(?<='"$date"' ).*?(?=$)' <<< "$item" | sed 's/^...//gi')"
