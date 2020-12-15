@@ -61,11 +61,9 @@ alias sed=$pfad_zu_sed47_binary
 
 ## sonstiges
 
-fyi, das ist alles etwas fragil, da schon *ein* verändertes merkmal im input das regex matching kaputt machen *kann*, das ist aber bei anderen scrapern nicht anders (wo es keine api gibt).
+übrigens, das ist alles etwas fragil, da schon *ein* verändertes merkmal im input das regex matching kaputt machen *kann*. meist passiert sowas aber nicht. das skript hat auch sortierungsprobleme (für die internetseite), wenn die vertretungsinfos von untis nicht vernünftig nach datum sortiert sind (es gab mal einen edge case).
 
 seit commit 1b06bdd sind die chars `( ) :` "illegal" und werden rausgefiltert, da die das regex matching kaputt machen.
-
-die in-code documentation ist auf englisch, warum auch immer.
 
 bild von der generierten statischen html seite:
 
